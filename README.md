@@ -7,16 +7,16 @@
 3. Mettez-vous en condition d'une mise en situation professionnelle : le client (fictif, bien entendu) attend une app fonctionnelle qui répond au besoin énoncé, c'est tout :)
 4. Lisez bien l'entièreté du brief avant de démarrer, n'hésitez pas à poser votre architecture sur papier (ou du moins à y réfléchir sur un support autre que l'IDE) avant de coder.
 
-➡️ [Cliquez ici pour lire le brief du client](BRIEF.md)
+➡️ [Cliquez ici pour lire le brief du client](docs/BRIEF.md)
 
 ## À faire
 
 - [ ] Justifier choix framework
-- [ ] BDD:
+- [X] BDD:
   - [X] Mettre en place PostgreSQL
   - [X] Faire migrations initiales
   - [X] Créer super-utilisateur
-  - [ ] Créer modèle(s)
+  - [X] Créer modèle(s)
 - [ ] IA:
   - [ ] Mettre en place Ollama
   - [ ] CRUD fiches (espace admin)
