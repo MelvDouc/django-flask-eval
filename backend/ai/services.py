@@ -1,11 +1,28 @@
 import json
-from os import getenv
-import requests
+from main.env import get_env
+from ollama import Client as OllamaClient
 
-OLLAMA_API_URL = f"{getenv("SLM_HOST")}/api/chat"
+OLLAMA_API_URL = f"{get_env("SLM_HOST")}/api/generate"
+
+OLLAMA_CLIENT = OllamaClient(
+    host=get_env("SLM_HOST")
+)
 
 
 def get_cocktail_recipe(prompt: str) -> dict | None:
+    full_prompt = f"""
+        You are a cocktail recipe generator with a PhD in mixology. Create a cocktail recipe from the following prompt:
+
+        "{prompt}"
+
+        Your response will be passed into a JSON parser so please respond ONLY with valid JSON in this exact format:
+        {{
+            "name": "Cocktail Name",
+            "description": "Brief description",
+            "ingredients": ["ingredient1", "ingredient2"],
+            "musical_genre?": "optional music genre"
+        }}
+    """
     messages = [
         {
             "role": "system",
@@ -13,38 +30,17 @@ def get_cocktail_recipe(prompt: str) -> dict | None:
         },
         {
             "role": "user",
-            "content": f"""
-                Create a cocktail recipe from the following prompt:
-
-                    "{prompt}"
-
-                Your response will be fed to a JSON parser. Consequently I need it to STRICTLY match the following JSON format:
-
-                ```
-                {{
-                    "name": string;
-                    "description": string;
-                    "ingredients": string[];
-                    "musical_genre"?: string; /* music that might fit well the drink */
-                }}
-                ```
-
-                Failure to comply will earn you a one-way ticket to jail.
-            """
+            "content": full_prompt
         }
     ]
 
-    payload = {
-        "model": "llama3.1",
-        "messages": messages,
-        "stream": False
-    }
-
     try:
-        response = requests.post(OLLAMA_API_URL, json=payload)
-        response.raise_for_status()
-        content = response.json()["message"]["content"]
-        return json.loads(content)
+        response = OLLAMA_CLIENT.chat(
+            model="llama3.1",
+            messages=messages
+        )
+        content = response.message.content
+        return json.loads(content) if content else None
 
     except Exception as e:
         print(f"Error: {e}")

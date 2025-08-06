@@ -10,15 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from dotenv import load_dotenv
-from os import getenv
 from pathlib import Path
+from .env import get_env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-dotenv_path = BASE_DIR / ".." / ".env"
-load_dotenv(dotenv_path=dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -29,7 +25,7 @@ SECRET_KEY = 'django-insecure-d3o@&#=3y50070det#75_2j)pmxwtb4t0f_fczn%0asvh9)s7o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 
 
 # Application definition
@@ -48,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware"
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -84,11 +80,11 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": getenv("DB_NAME"),
-        "USER": getenv("DB_USER"),
-        "PASSWORD": getenv("DB_PASSWORD"),
-        "HOST": getenv("DB_HOST"),
-        "PORT": getenv("DB_PORT")
+        "NAME": get_env("DB_NAME"),
+        "USER": get_env("DB_USER"),
+        "PASSWORD": get_env("DB_PASSWORD"),
+        "HOST": get_env("DB_HOST"),
+        "PORT": get_env("DB_PORT")
     }
 }
 
@@ -136,5 +132,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # local dev
-    "http://frontend:5173",  # container-to-container calls
+    "http://frontend",  # container-to-container calls
 ]

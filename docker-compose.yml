@@ -9,6 +9,7 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
+      SLM_HOST: ${SLM_HOST}
     ports:
       - "8000:8000"
     depends_on:
@@ -23,7 +24,8 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/app
+    - ./frontend:/app
+    - /app/node_modules
     depends_on:
       - backend
 
@@ -40,10 +42,19 @@ services:
 
   slm:
     image: ollama/ollama
+    ports:
+      - "11435:11434"
     volumes:
       - ollama_data:/root/.ollama
     tty: true
     restart: unless-stopped
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        ollama serve &
+        sleep 10
+        ollama pull llama3.1
+        wait
 
 volumes:
   postgres_data:

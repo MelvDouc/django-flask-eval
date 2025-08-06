@@ -1,11 +1,10 @@
-# frontend/Dockerfile
-FROM oven/bun:latest
+FROM node:22-slim
 
 WORKDIR /app
 
-COPY package.json bun.lock ./
-RUN bun install
+COPY package*.json ./
+RUN npm ci
 
 COPY . .
 
-CMD ["bun", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

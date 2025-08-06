@@ -10,6 +10,8 @@ def cocktails(request: HttpRequest) -> HttpResponse:
     match request.method:
         case "POST":
             form_data = json.loads(request.body)
+            print("Received request")
+            print(form_data)
             return cocktails_post(form_data)
         case _:
             return HttpResponseNotAllowed("Method not allowed")
@@ -27,10 +29,11 @@ def cocktails_post(form_data) -> HttpResponse:
     recipe_json = get_cocktail_recipe(user_prompt)
 
     if not recipe_json:
-        return JsonResponse([
+        result = [
             None,
             ["An occurred while generating the recipe."]
-        ])
+        ]
+        return JsonResponse(result, safe=False)
 
     recipe = CocktailRecipe()
     recipe.name = recipe_json["name"]
@@ -42,14 +45,16 @@ def cocktails_post(form_data) -> HttpResponse:
 
     recipe.save()
 
-    return JsonResponse([
+    result = [
         recipe_json,
         None
-    ])
+    ]
+    return JsonResponse(result, safe=False)
 
 
 def invalid_form_data_response() -> JsonResponse:
-    return JsonResponse([
+    result = [
         None,
         ["Invalid form data"]
-    ])
+    ]
+    return JsonResponse(result, safe=False)
