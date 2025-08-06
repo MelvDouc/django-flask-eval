@@ -1,10 +1,12 @@
 {
   "cSpell.words": [
+    "corsheaders",
     "createsuperuser",
     "makemigrations",
     "ollama",
     "PYTHONDONTWRITEBYTECODE",
     "PYTHONUNBUFFERED",
     "runserver"
-  ]
+  ],
+  "typescript.preferences.importModuleSpecifierEnding": "js"
 }

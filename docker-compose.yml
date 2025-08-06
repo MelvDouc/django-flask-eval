@@ -1,12 +1,31 @@
 services:
 
-  web:
-    build: .
+  backend:
+    build:
+      context: ./backend
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
     ports:
       - "8000:8000"
     depends_on:
       - database
       - slm
+    volumes:
+      - ./backend:/app # hot reloading
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
 
   database:
     image: postgres:16
@@ -21,8 +40,6 @@ services:
 
   slm:
     image: ollama/ollama
-    ports:
-      - "11434:11434"
     volumes:
       - ollama_data:/root/.ollama
     tty: true

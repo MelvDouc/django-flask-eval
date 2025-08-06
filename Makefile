@@ -1,19 +1,20 @@
-.PHONY: run-dev freeze-deps install migrations migrate superuser
+.PHONY: compose-up compose-down freeze-deps install migrations migrate superuser
 
 PYTHON_EXEC = .venv/bin/python3
-MANAGE_PY = $(PYTHON_EXEC) src/manage.py
+MANAGE_PY = $(PYTHON_EXEC) backend/manage.py
+REQUIREMENTS = backend/requirements.txt
 
-run-dev:
-	$(MANAGE_PY) runserver 8000
-
-compose:
+compose-up:
 	docker compose up --build
 
+compose-down:
+	docker compose down
+
 freeze-deps:
-	$(PYTHON_EXEC) -m pip freeze > requirements.txt
+	$(PYTHON_EXEC) -m pip freeze > $(REQUIREMENTS)
 
 install:
-	$(PYTHON_EXEC) -m pip install -r requirements.txt
+	$(PYTHON_EXEC) -m pip install -r $(REQUIREMENTS)
 
 migrations:
 	$(MANAGE_PY) makemigrations
