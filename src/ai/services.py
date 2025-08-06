@@ -1,117 +1,51 @@
-from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-import ollama
 import json
-from typing import List, Dict
+from os import getenv
+import requests
+
+OLLAMA_API_URL = f"{getenv("SLM_HOST")}/api/chat"
 
 
-class CocktailAI:
-    def __init__(self, model_name: str = "llama3.1"):
-        self.model_name = model_name
+def get_cocktail_recipe(prompt: str):
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a cocktail recipe generator with a PhD in mixology and a flair for always answering in the requested JSON format."
+        },
+        {
+            "role": "user",
+            "content": f"""
+                Create a cocktail recipe from the following prompt:
 
-    def suggest_cocktails(self, preferences: Dict) -> List[Dict]:
-        """
-        Generate cocktail suggestions based on user preferences
-        """
-        prompt = self._build_prompt(preferences)
+                    "{prompt}"
 
-        try:
-            response = ollama.chat(
-                model=self.model_name,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": "You are a world-renowned bartender. Respond only with valid JSON containing cocktail recipes."
-                    },
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ]
-            )
+                Your response will be fed to a JSON parser. Consequently I need it to STRICTLY match the following JSON format:
 
-            # Parse the response
-            cocktails = self._parse_response(response['message']['content'])
-            return cocktails
+                ```
+                {{
+                    "name": string;
+                    "description": string;
+                    "ingredients": string[];
+                    "musical_genre"?: string; /* music that might fit well the drink */
+                }}
+                ```
 
-        except Exception as e:
-            print(f"Error generating cocktails: {e}")
-            return []
-
-    def _build_prompt(self, preferences: Dict) -> str:
-        """Build a prompt based on user preferences"""
-        base_spirits = preferences.get('base_spirits', [])
-        flavor_profile = preferences.get('flavor_profile', '')
-        occasion = preferences.get('occasion', '')
-        difficulty = preferences.get('difficulty', 'easy')
-
-        prompt = f"""
-        Suggest 3 cocktail recipes based on these preferences:
-        - Base spirits: {', '.join(base_spirits) if base_spirits else 'any'}
-        - Flavor profile: {flavor_profile}
-        - Occasion: {occasion}
-        - Difficulty: {difficulty}
-
-        Return a JSON array with this structure:
-        [
-            {{
-                "name": "Cocktail Name",
-                "description": "Brief description",
-                "ingredients": [
-                    {{"name": "Ingredient", "amount": "2 oz", "type": "spirit/liqueur/mixer"}},
-                ],
-                "instructions": ["Step 1", "Step 2", "Step 3"],
-                "difficulty": "easy/medium/hard",
-                "glass_type": "rocks/martini/coupe",
-                "garnish": "lemon twist"
-            }}
-        ]
-        """
-        return prompt
-
-    def _parse_response(self, response_text: str) -> List[Dict]:
-        """Parse AI response and extract cocktail data"""
-        try:
-            # Clean up the response - sometimes AI adds extra text
-            start_idx = response_text.find('[')
-            end_idx = response_text.rfind(']') + 1
-
-            if start_idx != -1 and end_idx != 0:
-                json_str = response_text[start_idx:end_idx]
-                return json.loads(json_str)
-            else:
-                return []
-
-        except json.JSONDecodeError:
-            return []
-
-
-# views.py
-
-
-@csrf_exempt
-@require_http_methods(["POST"])
-def get_cocktail_suggestions(request):
-    try:
-        data = json.loads(request.body)
-        preferences = {
-            'base_spirits': data.get('base_spirits', []),
-            'flavor_profile': data.get('flavor_profile', ''),
-            'occasion': data.get('occasion', ''),
-            'difficulty': data.get('difficulty', 'easy')
+                Failure to comply will earn you a one-way ticket to jail.
+            """
         }
+    ]
 
-        ai = CocktailAI()
-        suggestions = ai.suggest_cocktails(preferences)
+    payload = {
+        "model": "llama3.1",
+        "messages": messages,
+        "stream": False
+    }
 
-        return JsonResponse({
-            'success': True,
-            'cocktails': suggestions
-        })
+    try:
+        response = requests.post(OLLAMA_API_URL, json=payload)
+        response.raise_for_status()
+        content = response.json()["message"]["content"]
+        return json.loads(content)
 
     except Exception as e:
-        return JsonResponse({
-            'success': False,
-            'error': str(e)
-        }, status=500)
+        print(f"Error: {e}")
+        return None

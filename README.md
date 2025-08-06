@@ -8,23 +8,3 @@
 4. Lisez bien l'entièreté du brief avant de démarrer, n'hésitez pas à poser votre architecture sur papier (ou du moins à y réfléchir sur un support autre que l'IDE) avant de coder.
 
 ➡️ [Cliquez ici pour lire le brief du client](docs/BRIEF.md)
-
-## À faire
-
-- [ ] Justifier choix framework
-- [X] BDD:
-  - [X] Mettre en place PostgreSQL
-  - [X] Faire migrations initiales
-  - [X] Créer super-utilisateur
-  - [X] Créer modèle(s)
-- [ ] IA:
-  - [ ] Mettre en place Ollama
-  - [ ] CRUD fiches (espace admin)
-- [ ] Docker:
-  - [ ] Mettre en place
-  - [ ] Documenter installation
-- [ ] Front:
-  - [ ] Styliser avec Bootstrap
-  - [ ] Pages:
-    - [ ] Accueil (descriptif projet)
-    - [ ] CRUD fiches

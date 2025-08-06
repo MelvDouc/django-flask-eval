@@ -1,4 +1,13 @@
 services:
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+      - slm
+
   database:
     image: postgres:16
     environment:
@@ -10,5 +19,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  slm:
+    image: ollama/ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    tty: true
+    restart: unless-stopped
+
 volumes:
   postgres_data:
+  ollama_data:

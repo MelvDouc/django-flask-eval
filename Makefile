@@ -1,13 +1,13 @@
 .PHONY: run-dev freeze-deps install migrations migrate superuser
 
 PYTHON_EXEC = .venv/bin/python3
-MANAGE_PY = src/manage.py
+MANAGE_PY = $(PYTHON_EXEC) src/manage.py
 
 run-dev:
-	$(PYTHON_EXEC) $(MANAGE_PY) runserver 8000
+	$(MANAGE_PY) runserver 8000
 
 compose:
-	docker compose up -d
+	docker compose up --build
 
 freeze-deps:
 	$(PYTHON_EXEC) -m pip freeze > requirements.txt
@@ -16,10 +16,10 @@ install:
 	$(PYTHON_EXEC) -m pip install -r requirements.txt
 
 migrations:
-	$(PYTHON_EXEC) $(MANAGE_PY) makemigrations
+	$(MANAGE_PY) makemigrations
 
 migrate:
-	$(PYTHON_EXEC) $(MANAGE_PY) migrate
+	$(MANAGE_PY) migrate
 
 superuser:
-	$(PYTHON_EXEC) $(MANAGE_PY) createsuperuser
+	$(MANAGE_PY) createsuperuser

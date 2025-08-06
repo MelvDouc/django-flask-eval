@@ -2,6 +2,9 @@
   "cSpell.words": [
     "createsuperuser",
     "makemigrations",
+    "ollama",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED",
     "runserver"
   ]
 }
