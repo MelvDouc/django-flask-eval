@@ -5,7 +5,7 @@ import requests
 OLLAMA_API_URL = f"{getenv("SLM_HOST")}/api/chat"
 
 
-def get_cocktail_recipe(prompt: str):
+def get_cocktail_recipe(prompt: str) -> dict | None:
     messages = [
         {
             "role": "system",
