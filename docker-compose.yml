@@ -41,20 +41,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   slm:
-    image: ollama/ollama
-    ports:
-      - "11435:11434"
+    build: ./ollama
     volumes:
       - ollama_data:/root/.ollama
+    ports:
+      - "11435:11434"
     tty: true
     restart: unless-stopped
-    entrypoint: ["/bin/sh", "-c"]
-    command:
-      - |
-        ollama serve &
-        sleep 10
-        ollama pull llama3.1
-        wait
 
 volumes:
   postgres_data:

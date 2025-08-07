@@ -1,9 +1,9 @@
 .CocktailReadyAlert {
   & button[data-status="success"] {
-    color: green;
+    background-color: green;
   }
 
   & button[data-status="failure"] {
-    color: red;
+    background-color: red;
   }
 }

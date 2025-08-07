@@ -1,7 +1,8 @@
 import type { Recipe } from "$/types.ts";
 import { onCocktailRecipeReceived } from "$/utils/api.ts";
+import { Link } from "$/utils/Router.tsx";
+import routes from "$/utils/routes.ts";
 import { obs } from "reactfree-jsx";
-
 import cssClasses from "./CocktailReadyAlert.module.scss";
 
 export default function CocktailReadyAlert() {
@@ -17,13 +18,13 @@ export default function CocktailReadyAlert() {
       element.showModal();
     });
 
-    onCocktailRecipeReceived(([recipe, errors]) => {
-      if (errors) {
-        resultObs.value = { status: "failure", errors };
+    onCocktailRecipeReceived((result) => {
+      if (!result.success) {
+        resultObs.value = { status: "failure", error: result.error };
         return;
       }
 
-      resultObs.value = { status: "success", recipe };
+      resultObs.value = { status: "success", recipe: result.data };
     });
   };
 
@@ -47,14 +48,12 @@ function CocktailReadyAlertChildren({ result }: {
 }) {
   switch (result.status) {
     case "success":
-      return (<p>Your recipe is ready!</p>);
+      return (
+        <p>Your recipe is ready <Link href={routes.CocktailPage(result.recipe.id)} state={result.recipe}>here</Link>!</p>
+      );
     case "failure":
       return (
-        <ul>
-          {result.errors.map((error) => (
-            <li>{error}</li>
-          ))}
-        </ul>
+        <p>{result.error}</p>
       );
     case "none":
       return null;
@@ -68,7 +67,7 @@ type SuccessRequestResult = {
 
 type FailureRequestResult = {
   status: "failure";
-  errors: string[];
+  error: string;
 };
 
 type NoneRequestResult = {

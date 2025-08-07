@@ -17,5 +17,13 @@ class CocktailRecipe(models.Model):
         help_text="Optional musical genre to pair with the cocktail"
     )
 
+    def to_json(self):
+        return {
+            "id": self.pk,
+            "name": self.name,
+            "ingredients": self.ingredients,
+            "musical_genre": self.musical_genre
+        }
+
     def __str__(self):
         return self.name
