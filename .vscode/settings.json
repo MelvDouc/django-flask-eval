@@ -3,6 +3,7 @@
     "appendable",
     "corsheaders",
     "createsuperuser",
+    "dexie",
     "makemigrations",
     "ollama",
     "PYTHONDONTWRITEBYTECODE",

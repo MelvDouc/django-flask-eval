@@ -6,14 +6,15 @@
   - [X] Faire migrations initiales
   - [X] Créer super-utilisateur
   - [X] Créer modèle(s)
-- [ ] IA:
-  - [ ] Mettre en place Ollama
-  - [ ] CRUD fiches (espace admin)
+- [X] IA:
+  - [X] Mettre en place Ollama
+  - [X] CRUD fiches (espace admin)
 - [ ] Docker:
-  - [ ] compose
+  - [X] compose
   - [ ] Documenter installation
-- [ ] Front:
-  - [ ] Styliser avec Bootstrap
-  - [ ] Pages:
-    - [ ] Accueil (descriptif projet)
-    - [ ] CRUD fiches
+- [X] Front:
+  - [X] Styliser
+  - [X] Pages:
+    - [X] Accueil (descriptif projet)
+    - [X] Génération fiche
+    - [X] Liste fiches

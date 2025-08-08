@@ -9,7 +9,7 @@ OLLAMA_CLIENT = OllamaClient(
 )
 
 
-def get_cocktail_recipe(prompt: str) -> dict | None:
+def get_cocktail_recipe(prompt: str) -> dict:
     messages = [
         {
             "role": "system",
@@ -29,6 +29,8 @@ def get_cocktail_recipe(prompt: str) -> dict | None:
                     "ingredients": ["ingredient1", "ingredient2"],
                     "musical_genre?": "optional music genre"
                 }}
+
+                Failure to comply earns you a one-way ticket to jail.
             """
         }
     ]
@@ -39,8 +41,20 @@ def get_cocktail_recipe(prompt: str) -> dict | None:
             messages=messages
         )
         content = response.message.content
-        return json.loads(content) if content else None
+        return json.loads(content) if content else default_response(prompt)
 
     except Exception as e:
         print(f"Error: {e}")
-        return None
+        return default_response()
+
+
+def default_response(description: str = "-") -> dict:
+    return {
+        "name": "Default Cocktail",
+        "description": description,
+        "ingredients": [
+            "vodka",
+            "orange juice",
+            "grenadine"
+        ]
+    }

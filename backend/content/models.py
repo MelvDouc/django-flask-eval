@@ -21,6 +21,7 @@ class CocktailRecipe(models.Model):
         return {
             "id": self.pk,
             "name": self.name,
+            "description": self.description,
             "ingredients": self.ingredients,
             "musical_genre": self.musical_genre
         }
