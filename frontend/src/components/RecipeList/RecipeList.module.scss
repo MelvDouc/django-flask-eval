@@ -1,1 +1,17 @@
-.RecipeList {}
+.RecipeList {
+  max-width: 800px;
+  margin: 0 auto;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  gap: 0.5em;
+
+  li {
+    padding: 1em;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}

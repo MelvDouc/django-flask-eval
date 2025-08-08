@@ -9,7 +9,7 @@ export default function Nav() {
       <ul>
         <li><Link href={routes.Home}>Home</Link></li>
         <li><Link href={routes.RecipesPage}>Cocktails</Link></li>
-        <li><Link href={routes.RecipeRequest}>Request cocktail</Link></li>
+        <li><Link href={routes.RecipeRequest}>Make your own</Link></li>
       </ul>
     </div>
   );

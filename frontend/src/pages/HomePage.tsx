@@ -3,9 +3,7 @@ export default function HomePage() {
     <>
       <h1>Cocktail Generator</h1>
 
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officiis veritatis, perspiciatis eum reprehenderit commodi dolorem maiores eaque perferendis praesentium reiciendis ratione odio vero, animi voluptatem recusandae optio molestias expedita sed consequuntur dicta rem at, asperiores quae cupiditate? Soluta aut sunt cumque tempora velit autem modi unde itaque! Distinctio, doloremque voluptatum.</p>
-      <p>Magni perspiciatis pariatur recusandae voluptatum ducimus commodi eius adipisci corrupti? Corporis, nam. Molestias sint, aliquid laboriosam, voluptates recusandae magni obcaecati, autem aut dolorum sequi expedita error facilis! Doloribus voluptatibus doloremque optio odit impedit enim molestiae facilis dolores aperiam porro. Nulla, culpa esse. Delectus, voluptatum nam esse facilis enim ex quaerat!</p>
-      <p>Numquam eos quidem facilis asperiores, maxime enim. Ratione delectus voluptas fugiat perspiciatis nulla, cupiditate fuga animi maiores, alias asperiores quas eveniet sequi reiciendis doloremque unde repudiandae voluptates a doloribus blanditiis natus ut quisquam recusandae! Sit distinctio fugit placeat eveniet iusto. Ad repudiandae voluptate veniam autem nulla harum molestias rem cum.</p>
+      <p>This app is a cocktail recipe generator powered by a small language model. Simply describe your mood, preferred flavors, or available ingredients, and the AI will create a bespoke recipe. Each cocktail recipe includes a creative name, a short description, and a detailed list of ingredients, ensuring you can mix it with confidence. Whether you’re looking for something refreshing or spicy, daring or indulgent, the app delivers ideas that are both practical and imaginative. Built with Django on the back end and a fast, lightweight frontend, it’s designed for smooth interaction and quick results. Perfect for experimenting with new drinks, impressing friends, or simply discovering your next favorite cocktail — all from the comfort of your own home.</p>
     </>
   );
 }

@@ -1,9 +1,10 @@
-import RequestCocktailForm from "$/components/RequestRecipeForm/RequestRecipeForm";
+import RequestRecipeForm from "$/components/RequestRecipeForm/RequestRecipeForm";
 
 export default function RecipeRequestPage() {
   return (
     <>
-      <RequestCocktailForm />
+      <h1>Request a Recipe</h1>
+      <RequestRecipeForm />
     </>
   );
 }

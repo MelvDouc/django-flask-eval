@@ -1,23 +1,22 @@
 import { requestRecipe } from "$/utils/api.ts";
+import cssClasses from "./RequestRecipeForm.module.scss";
 
-export default function RequestCocktailForm() {
+export default function RequestRecipeForm() {
   return (
-    <form method="POST" on:submit={handleSubmit}>
-      <section className="row">
-        <article className="col">
-          <label htmlFor="prompt" className="form-label">Your prompt</label>
+    <form method="POST" on:submit={handleSubmit} className={cssClasses.RequestRecipeForm}>
+      <section className={cssClasses.Row}>
+        <article className={cssClasses.Col}>
+          <label htmlFor="prompt">Your prompt</label>
           <textarea
-            className="form-control"
             name="prompt"
             id="prompt"
             rows={10}
-            cols={20}
           ></textarea>
         </article>
       </section>
-      <section className="row">
-        <article className="col">
-          <button type="submit" className="btn btn-success">Go</button>
+      <section className={cssClasses.Row}>
+        <article className={cssClasses.Col}>
+          <button type="submit">Go</button>
         </article>
       </section>
     </form>
@@ -26,7 +25,10 @@ export default function RequestCocktailForm() {
 
 function PostRequestMessage() {
   return (
-    <p>Your request has been received. You'll be notified when the recipe is ready. Stay tuned!</p>
+    <>
+      <p>Your request has been received. You'll be notified when the recipe is ready -- this shouldn't take more than 5 minutes.</p>
+      <p>Stay tuned!</p>
+    </>
   );
 }
 

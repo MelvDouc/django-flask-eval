@@ -6,10 +6,11 @@ import routes from "$/utils/routes.ts";
 import { Route, Router } from "$/utils/Router.tsx";
 import RecipesPage from "$/pages/RecipesPage";
 import RecipePage from "$/pages/RecipePage.tsx";
+import cssClasses from "./App.module.scss";
 
 export default function App() {
   return (
-    <>
+    <div className={cssClasses.App}>
       <header>
         <Nav />
       </header>
@@ -22,6 +23,6 @@ export default function App() {
         </Router>
       </main>
       <RecipeAlert />
-    </>
+    </div>
   );
 }

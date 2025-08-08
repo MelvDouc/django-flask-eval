@@ -1,1 +1,24 @@
-.CocktailCard {}
+.RecipeCard {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-block: 0.5em;
+  }
+
+  .Name {
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  .Ingredients {
+    list-style-position: inside;
+  }
+}

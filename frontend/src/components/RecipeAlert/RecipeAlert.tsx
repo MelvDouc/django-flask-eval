@@ -36,6 +36,7 @@ export default function RecipeAlert() {
         ))}
       </div>
       <button
+        className={cssClasses.CloseButton}
         data-status={resultObs.map(({ status }) => status)}
         on:click={() => resultObs.value = { status: "none" }}
       >OK</button>
@@ -49,7 +50,7 @@ function RecipeAlertChildren({ result }: {
   switch (result.status) {
     case "success":
       return (
-        <p>Your recipe is ready <Link href={routes.RecipePage(result.recipe.id)} state={result.recipe}>here</Link>!</p>
+        <p>Your recipe is ready <Link href={routes.RecipePage(result.recipe.id)}>here</Link>!</p>
       );
     case "failure":
       return (

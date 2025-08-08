@@ -36,6 +36,7 @@ class RouterOutlet extends HTMLElement {
     super();
     this.stack = [...RouterOutlet.routeQueue];
     RouterOutlet.routeQueue.length = 0;
+    this.style.display = "contents";
   }
 
   async connectedCallback() {
