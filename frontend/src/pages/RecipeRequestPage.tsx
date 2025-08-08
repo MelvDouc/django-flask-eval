@@ -1,4 +1,4 @@
-import RequestRecipeForm from "$/components/RequestRecipeForm/RequestRecipeForm";
+import RequestRecipeForm from "$/components/RequestRecipeForm/RequestRecipeForm.tsx";
 
 export default function RecipeRequestPage() {
   return (

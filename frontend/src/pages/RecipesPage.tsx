@@ -1,4 +1,4 @@
-import CocktailRecipeList from "$/components/RecipeList/RecipeList";
+import CocktailRecipeList from "$/components/RecipeList/RecipeList.tsx";
 import { getRecipes } from "$/utils/api.ts";
 import { Link } from "$/utils/Router.tsx";
 import routes from "$/utils/routes.ts";

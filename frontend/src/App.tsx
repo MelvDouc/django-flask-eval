@@ -1,11 +1,11 @@
-import RecipeAlert from "$/components/RecipeAlert/RecipeAlert";
 import Nav from "$/components/Nav/Nav.tsx";
+import RecipeAlert from "$/components/RecipeAlert/RecipeAlert.tsx";
 import HomePage from "$/pages/HomePage.tsx";
-import RecipeRequestPage from "$/pages/RecipeRequestPage";
-import routes from "$/utils/routes.ts";
-import { Route, Router } from "$/utils/Router.tsx";
-import RecipesPage from "$/pages/RecipesPage";
 import RecipePage from "$/pages/RecipePage.tsx";
+import RecipeRequestPage from "$/pages/RecipeRequestPage.tsx";
+import RecipesPage from "$/pages/RecipesPage";
+import { Route, Router } from "$/utils/Router.tsx";
+import routes from "$/utils/routes.ts";
 import cssClasses from "./App.module.scss";
 
 export default function App() {
