@@ -16,7 +16,9 @@ services:
       - database
       - slm
     volumes:
-      - ./backend:/app # hot reloading
+      - ./backend:/app
+    post_start:
+      - command: python3 manage.py migrate
 
   frontend:
     build:
