@@ -22,22 +22,25 @@ async function fetchJson<T, E>(
   }
 }
 
-export function getCocktailRecipes(start: number, end: number) {
+export function getRecipes(start: number, end: number) {
   return fetchJson<Recipe[], string>(
-    `/cocktails/?start=${start}&end=${end}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-    },
+    `/recipes/?start=${start}&end=${end}`,
+    null,
     { success: false, error: "Errors getting recipes." }
   );
 }
 
-export function getCocktailRecipe(prompt: string) {
+export function getSavedRecipe(id: number) {
   return fetchJson<Recipe, string>(
-    "/cocktails/",
+    "/recipes/" + id,
+    null,
+    { success: false, error: `Could not get recipe with id "${id}".` }
+  );
+}
+
+export function getNewRecipe(prompt: string) {
+  return fetchJson<Recipe, string>(
+    "/recipes/",
     {
       method: "POST",
       headers: {
@@ -49,12 +52,10 @@ export function getCocktailRecipe(prompt: string) {
   );
 }
 
-export function onCocktailRecipeReceived(
-  listener: (result: Result<Recipe, string>) => unknown
-): void {
+export function onRecipeReceived(listener: (result: Result<Recipe, string>) => unknown): void {
   API_WORKER.onmessage = (e) => listener(e.data);
 }
 
-export function requestCocktailRecipe(prompt: string): void {
+export function requestRecipe(prompt: string): void {
   API_WORKER.postMessage(prompt);
 }

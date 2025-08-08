@@ -16,5 +16,5 @@ export type Recipe = {
   name: string;
   description: string;
   ingredients: string[];
-  music_genre?: string;
+  musical_genre?: string;
 };

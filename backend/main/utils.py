@@ -4,8 +4,10 @@ from django.http import JsonResponse
 def result_json_response(success: bool, data_or_error):
     result = {
         "success": success,
-        "error": data_or_error
     }
+
+    key2 = "data" if success else "error"
+    result[key2] = data_or_error
     return JsonResponse(result)
 
 

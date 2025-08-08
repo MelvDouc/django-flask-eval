@@ -6,7 +6,7 @@ type ParamRecord = Record<string, string>;
 type Handler = (params?: ParamRecord) => HandlerReturnValue;
 type ReadyHandler = () => HandlerReturnValue;
 
-export type InferParams<T extends string> =
+type InferParams<T extends string> =
   T extends `${infer A}/${infer B}` ? InferParams<A> & InferParams<B>
   : T extends `/${infer A}` ? InferParams<A>
   : T extends `:${infer A}` ? { [K in A]: string }
@@ -117,12 +117,12 @@ export function Link({ href, state, children }: {
   children: ComponentChild;
 }) {
   const url = new URL(href, location.origin);
+  const customEvent = new CustomEvent(ANCHOR_CLICK_EVENT_NAME, {
+    detail: { url, state }
+  });
 
   const handleClick = (e: Event) => {
     e.preventDefault();
-    const customEvent = new CustomEvent(ANCHOR_CLICK_EVENT_NAME, {
-      detail: { url, state }
-    });
     window.dispatchEvent(customEvent);
   };
 

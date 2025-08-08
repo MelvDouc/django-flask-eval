@@ -10,19 +10,6 @@ OLLAMA_CLIENT = OllamaClient(
 
 
 def get_cocktail_recipe(prompt: str) -> dict | None:
-    full_prompt = f"""
-        You are a cocktail recipe generator with a PhD in mixology. Create a cocktail recipe from the following prompt:
-
-        "{prompt}"
-
-        Your response will be passed into a JSON parser so please respond ONLY with valid JSON in this exact format:
-        {{
-            "name": "Cocktail Name",
-            "description": "Brief description",
-            "ingredients": ["ingredient1", "ingredient2"],
-            "musical_genre?": "optional music genre"
-        }}
-    """
     messages = [
         {
             "role": "system",
@@ -30,7 +17,19 @@ def get_cocktail_recipe(prompt: str) -> dict | None:
         },
         {
             "role": "user",
-            "content": full_prompt
+            "content": f"""
+                You are a cocktail recipe generator with a PhD in mixology. Create a cocktail recipe from the following prompt:
+
+                "{prompt}"
+
+                Your response will be passed into a JSON parser so please respond ONLY with valid JSON in this exact format:
+                {{
+                    "name": "Cocktail Name",
+                    "description": "Brief description",
+                    "ingredients": ["ingredient1", "ingredient2"],
+                    "musical_genre?": "optional music genre"
+                }}
+            """
         }
     ]
 

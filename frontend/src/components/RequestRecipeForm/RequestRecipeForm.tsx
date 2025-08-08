@@ -1,4 +1,4 @@
-import { requestCocktailRecipe } from "$/utils/api.ts";
+import { requestRecipe } from "$/utils/api.ts";
 
 export default function RequestCocktailForm() {
   return (
@@ -35,6 +35,6 @@ function handleSubmit(e: SubmitEvent) {
   const form = e.target as HTMLFormElement;
   const formData = new FormData(form);
   const prompt = formData.get("prompt") as string;
-  requestCocktailRecipe(prompt);
+  requestRecipe(prompt);
   form.replaceWith(<PostRequestMessage />);
 }

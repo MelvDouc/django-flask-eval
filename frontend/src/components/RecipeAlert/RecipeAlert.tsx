@@ -1,11 +1,11 @@
 import type { Recipe } from "$/types.ts";
-import { onCocktailRecipeReceived } from "$/utils/api.ts";
+import { onRecipeReceived } from "$/utils/api.ts";
 import { Link } from "$/utils/Router.tsx";
 import routes from "$/utils/routes.ts";
 import { obs } from "reactfree-jsx";
-import cssClasses from "./CocktailReadyAlert.module.scss";
+import cssClasses from "./RecipeAlert.module.scss";
 
-export default function CocktailReadyAlert() {
+export default function RecipeAlert() {
   const resultObs = obs<RequestResult>({ status: "none" });
 
   const $init = (element: HTMLDialogElement): void => {
@@ -18,7 +18,7 @@ export default function CocktailReadyAlert() {
       element.showModal();
     });
 
-    onCocktailRecipeReceived((result) => {
+    onRecipeReceived((result) => {
       if (!result.success) {
         resultObs.value = { status: "failure", error: result.error };
         return;
@@ -29,10 +29,10 @@ export default function CocktailReadyAlert() {
   };
 
   return (
-    <dialog className={cssClasses.CocktailReadyAlert} $init={$init}>
+    <dialog className={cssClasses.RecipeAlert} $init={$init}>
       <div className={cssClasses.Content}>
         {resultObs.map((result) => (
-          <CocktailReadyAlertChildren result={result} />
+          <RecipeAlertChildren result={result} />
         ))}
       </div>
       <button
@@ -43,13 +43,13 @@ export default function CocktailReadyAlert() {
   );
 }
 
-function CocktailReadyAlertChildren({ result }: {
+function RecipeAlertChildren({ result }: {
   result: RequestResult;
 }) {
   switch (result.status) {
     case "success":
       return (
-        <p>Your recipe is ready <Link href={routes.CocktailPage(result.recipe.id)} state={result.recipe}>here</Link>!</p>
+        <p>Your recipe is ready <Link href={routes.RecipePage(result.recipe.id)} state={result.recipe}>here</Link>!</p>
       );
     case "failure":
       return (
